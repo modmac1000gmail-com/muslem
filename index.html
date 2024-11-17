@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نور الإيمان | مواقيت الصلاة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0b4b3e;
+            --secondary: #148972;
+            --accent: #FFB300;
+            --dark: #1A1A1A;
+            --light: #F5F5F5;
+            --white: #FFFFFF;
+            --gradient: linear-gradient(135deg, #0B4B3D, #148972);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--gradient);
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .prayer-times {
+            max-width: 1200px;
+            margin: 100px auto 2rem;
+            padding: 0 2rem;
+        }
+
+        .location-info {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .location-info i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .next-prayer {
+            background: var(--gradient);
+            color: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .countdown {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .prayer-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .prayer-card h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .prayer-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1.5rem;
+        }
+
+        .prayer-item {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .prayer-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .prayer-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .prayer-time {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        @media (max-width: 1200px) {
+            .nav-container, .prayer-times {
+                max-width: 95%;
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .prayer-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+
+            .prayer-item {
+                padding: 1.2rem;
+            }
+
+            .prayer-name {
+                font-size: 1.1rem;
+            }
+
+            .prayer-time {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.5rem 0;
+            }
+
+            .nav-container {
+                position: relative;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--gradient);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem;
+                transition: 0.3s;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .prayer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .next-prayer {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+
+            .next-prayer h2 {
+                font-size: 1.5rem;
+            }
+
+            .countdown {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .prayer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prayer-item {
+                margin-bottom: 1rem;
+            }
+
+            .location-info {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .next-prayer h2 {
+                font-size: 1.3rem;
+            }
+
+            .countdown {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-mosque"></i>
+                نور الإيمان
+            </a>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="clok.html" class="nav-link">مواقيت الصلاة</a>
+                <a href="qouran.html" class="nav-link">القرآن الكريم</a>
+                <a href="adcar.html" class="nav-link">الأذكار</a>
+                <a href="mosc.html" class="nav-link">المساجد القريبة</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="prayer-times">
+        <div class="location-info">
+            <i class="fas fa-location-dot"></i>
+            <div>
+                <h3>الموقع الحالي</h3>
+                <p>مكة المكرمة، المملكة العربية السعودية</p>
+            </div>
+        </div>
+
+        <div class="next-prayer">
+            <div>
+                <h2>الصلاة القادمة: العصر</h2>
+                <p>متبقي حتى الأذان</p>
+            </div>
+            <div class="countdown" id="countdown">00:00:00</div>
+        </div>
+
+        <div class="prayer-card">
+            <h2>مواقيت الصلاة اليوم</h2>
+            <div class="prayer-grid">
+                <div class="prayer-item">
+                    <div class="prayer-name">الفجر</div>
+                    <div class="prayer-time">04:30</div>
+                </div>
+                <div class="prayer-item">
+                    <div class="prayer-name">الشروق</div>
+                    <div class="prayer-time">06:15</div>
+                </div>
+                <div class="prayer-item">
+                    <div class="prayer-name">الظهر</div>
+                    <div class="prayer-time">12:00</div>
+                </div>
+                <div class="prayer-item">
+                    <div class="prayer-name">العصر</div>
+                    <div class="prayer-time">15:30</div>
+                </div>
+                <div class="prayer-item">
+                    <div class="prayer-name">المغرب</div>
+                    <div class="prayer-time">17:45</div>
+                </div>
+                <div class="prayer-item">
+                    <div class="prayer-name">العشاء</div>
+                    <div class="prayer-time">19:15</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // مواقيت الصلاة
+            const prayerTimes = {
+                'الفجر': '04:30',
+                'الشروق': '06:15',
+                'الظهر': '12:00',
+                'العصر': '15:30',
+                'المغرب': '17:45',
+                'العشاء': '19:15'
+            };
+
+            function getNextPrayer() {
+                const now = new Date();
+                const currentTime = now.getHours() * 60 + now.getMinutes();
+
+                let nextPrayer = null;
+                let nextPrayerTime = null;
+
+                for (let [prayer, time] of Object.entries(prayerTimes)) {
+                    const [hours, minutes] = time.split(':').map(Number);
+                    const prayerMinutes = hours * 60 + minutes;
+
+                    if (prayerMinutes > currentTime) {
+                        nextPrayer = prayer;
+                        nextPrayerTime = prayerMinutes;
+                        break;
+                    }
+                }
+
+                if (!nextPrayer) {
+                    nextPrayer = 'الفجر';
+                    const [hours, minutes] = prayerTimes['الفجر'].split(':').map(Number);
+                    nextPrayerTime = hours * 60 + minutes + 24 * 60;
+                }
+
+                return { prayer: nextPrayer, time: nextPrayerTime };
+            }
+
+            function updateNextPrayer() {
+                const { prayer, time } = getNextPrayer();
+                const nextPrayerElement = document.querySelector('.next-prayer h2');
+                nextPrayerElement.textContent = `الصلاة القادمة: ${prayer}`;
+                return time;
+            }
+
+            function updateCountdown() {
+                const now = new Date();
+                const currentMinutes = now.getHours() * 60 + now.getMinutes();
+                const nextPrayerTime = updateNextPrayer();
+                
+                let diff = nextPrayerTime - currentMinutes;
+                
+                if (diff < 0) {
+                    diff += 24 * 60;
+                }
+
+                const hours = Math.floor(diff / 60);
+                const minutes = diff % 60;
+                const seconds = 59 - now.getSeconds();
+
+                const countdown = document.getElementById('countdown');
+                countdown.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                if(navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            });
+        });
+
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartY = e.changedTouches[0].screenY;
+        }, false);
+
+        document.addEventListener('touchend', e => {
+            touchEndY = e.changedTouches[0].screenY;
+            if(Math.abs(touchStartY - touchEndY) > 30) {
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.remove('active');
+            }
+        }, false);
+    </script>
+</body>
+</html>
